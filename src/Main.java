@@ -19,12 +19,15 @@ public class Main {
 
     private static Scanner scan = new Scanner(System.in); //made this static so I can use it throughout the code, might have been a mistake.
 
+    private static int numSides;
     public static void main(String[] args) {
 
 
         welcomingStatement();
-        diceRoll(sides());
+        sides();
+        diceRoll();
         userContinue();
+
 
     }
 
@@ -34,39 +37,36 @@ public class Main {
         System.out.println("How many sides should both dice have?");
     }
 
-    private static int sides() {
+    private static void sides() {
         while (!scan.hasNextInt()) {
             System.out.println("That isn't a number!");
             scan.nextLine();
         }
-        int sides = scan.nextInt();
+        numSides = scan.nextInt();
 
-        return sides;
     }
 
-    private static int diceRoll(int diceRoll) {          //sides get assigned to diceRoll
+    private static void diceRoll() {          //sides get assigned to diceRoll
         Random randomNumberGen = new Random();
         System.out.println("You rolled...");
-        System.out.println("\tDice 1:  " + (randomNumberGen.nextInt(diceRoll) + 1));
-        System.out.println("\tDice 2:  " + (randomNumberGen.nextInt(diceRoll) + 1) + "\n");
-        return diceRoll;
+        System.out.println("\tDice 1:  " + (randomNumberGen.nextInt(numSides) + 1));
+        System.out.println("\tDice 2:  " + (randomNumberGen.nextInt(numSides) + 1) + "\n");
+        //return diceRoll;
     }
 
     private static void userContinue() {
         System.out.println("Roll again? (y/n)");
         String userChoice = scan.next();
         if (userChoice.equalsIgnoreCase("y")) {
-            codeLoop();
+            diceRoll();
+            userContinue();
         } else {
             System.out.println("Goodbye!");
         }
 
     }
 
-    private static void codeLoop() {
-        welcomingStatement();
-        diceRoll(sides());
-        userContinue();
-    }
+
+
 
 }
